@@ -7,7 +7,7 @@ const Actor = require("./Actor");
 
 const Movie = sequelize.define("Movie", {
   name: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   view: {
@@ -16,11 +16,11 @@ const Movie = sequelize.define("Movie", {
     defaultValue: 0,
   },
   imageUrl: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: true,
   },
   videoUrl: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: true,
   },
 });
