@@ -34,7 +34,7 @@ exports.getMoviesByName = async (req, res) => {
     res.status(200).json({ movies, totalPages });
   } catch (error) {
     console.error("Error searching for movies:", error); // Gỡ rối: in lỗi chi tiết
-    res.status(500).json({ error: "Error searching for movies" });
+    res.status(500).json({ error: error });
   }
 };
 
