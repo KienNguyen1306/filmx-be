@@ -16,13 +16,15 @@ exports.getMoviesByName = async (req, res) => {
       where: {
         [Op.or]: [
           { name: { [Op.like]: `%${searchQuery}%` } }, // Tìm kiếm theo tên phim
-          { actors: { [Op.like]: `%${searchQuery}%` } }, // Tìm kiếm theo tên diễn viên
+          {
+            '$Actor.name$': { [Op.like]: `%${searchQuery}%` }, // Tìm kiếm theo tên diễn viên
+          }, // Tìm kiếm theo tên diễn viên
         ],
       },
       order: [["createdAt", "DESC"]],
       offset,
       limit,
-      include: [{ model: Genre }, { model: Country }],
+      include: [{ model: Genre }, { model: Country },{model: Actor}],
     });
     if (count === 0) {
       // Trả về một thông báo hoặc danh sách rỗng khi không có kết quả tìm kiếm
