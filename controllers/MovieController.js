@@ -14,7 +14,10 @@ exports.getMoviesByName = async (req, res) => {
 
     const { count, rows: movies } = await Movie.findAndCountAll({
       where: {
-        name: { [Op.like]: `%${searchQuery}%` },
+        [Op.or]: [
+          { name: { [Op.like]: `%${searchQuery}%` } }, // Tìm kiếm theo tên phim
+          { actors: { [Op.like]: `%${searchQuery}%` } }, // Tìm kiếm theo tên diễn viên
+        ],
       },
       order: [["createdAt", "DESC"]],
       offset,
