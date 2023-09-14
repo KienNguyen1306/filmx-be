@@ -2,6 +2,8 @@
 const Movie = require("../models/Movie");
 const Genre = require("../models/Genre");
 const Country = require("../models/Country");
+const Actor = require("../models/Actor");
+
 const { Op } = require("sequelize");
 const until = require("../until");
 
