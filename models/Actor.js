@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
+
 const Actor = sequelize.define("Actor", {
   name: {
     type: DataTypes.STRING,
@@ -8,5 +9,6 @@ const Actor = sequelize.define("Actor", {
     unique: true,
   },
 });
+
 
 module.exports = Actor;

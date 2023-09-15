@@ -2,8 +2,6 @@
 const Movie = require("../models/Movie");
 const Genre = require("../models/Genre");
 const Country = require("../models/Country");
-const Actor = require("../models/Actor");
-
 const { Op } = require("sequelize");
 const until = require("../until");
 
@@ -16,17 +14,12 @@ exports.getMoviesByName = async (req, res) => {
 
     const { count, rows: movies } = await Movie.findAndCountAll({
       where: {
-        [Op.or]: [
-          { name: { [Op.like]: `%${searchQuery}%` } }, // Tìm kiếm theo tên phim
-          {
-            '$Actor.name$': { [Op.like]: `%${searchQuery}%` }, // Tìm kiếm theo tên diễn viên
-          }, // Tìm kiếm theo tên diễn viên
-        ],
+        name: { [Op.like]: `%${searchQuery}%` },
       },
       order: [["createdAt", "DESC"]],
       offset,
       limit,
-      include: [{ model: Genre }, { model: Country },{model: Actor}],
+      include: [{ model: Genre }, { model: Country }],
     });
     if (count === 0) {
       // Trả về một thông báo hoặc danh sách rỗng khi không có kết quả tìm kiếm
@@ -38,7 +31,7 @@ exports.getMoviesByName = async (req, res) => {
     res.status(200).json({ movies, totalPages });
   } catch (error) {
     console.error("Error searching for movies:", error); // Gỡ rối: in lỗi chi tiết
-    res.status(500).json({ error: error });
+    res.status(500).json({ error: "Error searching for movies" });
   }
 };
 
