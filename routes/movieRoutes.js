@@ -39,6 +39,6 @@ router.put(
   MovieController.updateMovie
 ); // UPDATE a movie
 router.delete("/:id", isAuthenticated, isAdmin, MovieController.deleteMovie); // DELETE a movie
-router.post("/:id/increase-view", MovieController.increaseView); // API để tăng số lượt xem
+router.post("/increase-view/:movieId", MovieController.increaseView); // API để tăng số lượt xem
 
 module.exports = router;

@@ -230,22 +230,22 @@ exports.getRelatedMovies = async (req, res) => {
 };
 
 exports.increaseView = async (req, res) => {
+  const movieId = req.params.movieId;
   try {
-    const videoId = req.params.id;
+    // Tìm phim dựa trên movieId
+    const movie = await Movie.findByPk(movieId);
 
-    // Tìm video theo ID
-    const video = await db.Video.findByPk(videoId);
-    if (!video) {
-      return res.status(404).json({ error: "Video not found" });
+    if (!movie) {
+      return res.status(404).json({ error: 'Phim không tồn tại' });
     }
 
-    // Tăng số lượt xem
-    video.viewCount += 1;
-    await video.save();
+    // Tăng giá trị 'views' lên 1 và lưu vào cơ sở dữ liệu
+    movie.view += 1;
+    await movie.save();
 
-    res.json({ message: "View increased successfully" });
+    // Trả về phim để xem
+    res.json({message:'sussec'});
   } catch (error) {
-    console.error("Error increasing view:", error);
-    res.status(500).json({ error: error });
+    res.status(500).json({ error: 'Lỗi trong quá trình xem phim' });
   }
 };

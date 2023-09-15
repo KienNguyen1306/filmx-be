@@ -9,6 +9,5 @@ const sequelize = new Sequelize({
   host: process.env.DATABASE_HOST,
   port: process.env.DATABASE_PORT,
 });
-console.log("password", process.env.DATABASE_PASS);
 
 module.exports = sequelize;
