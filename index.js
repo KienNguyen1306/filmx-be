@@ -50,11 +50,11 @@ setupSwagger(app); // Sử dụng setup Swagger
 sequelize
   .sync()
   .then(async () => {
-    await User.bulkCreate(database.userData);
-    await Actor.bulkCreate(database.actorData);
-    await Genre.bulkCreate(database.genreData);
-    await Country.bulkCreate(database.contryData);
-    await Movie.bulkCreate(database.movieData);
+    // await User.bulkCreate(database.userData);
+    // await Actor.bulkCreate(database.actorData);
+    // await Genre.bulkCreate(database.genreData);
+    // await Country.bulkCreate(database.contryData);
+    // await Movie.bulkCreate(database.movieData);
     console.log("Database synced");
   })
   .catch((err) => {

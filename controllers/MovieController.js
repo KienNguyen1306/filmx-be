@@ -246,6 +246,6 @@ exports.increaseView = async (req, res) => {
     res.json({ message: "View increased successfully" });
   } catch (error) {
     console.error("Error increasing view:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error });
   }
 };
