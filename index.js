@@ -37,7 +37,7 @@ const app = express();
 // app.use(cors());
 app.use(
   cors({
-    origin: 'https://phim18hay.online',
+    origin: 'phim18hay.online',
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
