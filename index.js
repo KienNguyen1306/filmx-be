@@ -34,10 +34,10 @@ const setupSwagger = require("./swagger.js"); // Thay đổi đường dẫn t�
 // app
 const app = express();
 // kết nối cort
-// app.use(cors());
-app.use(cors({
-  origin: ['*']
-}));
+app.use(cors());
+// app.use(cors({
+//   origin: ['*']
+// }));
 // bodyParser
 app.use(bodyParser.json());
 
