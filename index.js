@@ -35,18 +35,21 @@ const setupSwagger = require("./swagger.js"); // Thay đổi đường dẫn t�
 const app = express();
 // kết nối cort
 app.use(cors());
-// app.use(cors({
-//   origin: ['*']
-// }));
+
+var corsOptions = {
+  origin: 'https://phim18hay.online',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 // bodyParser
 app.use(bodyParser.json());
 
 // URL
-app.use("/users", userRoutes);
-app.use("/genres", genreRoutes);
-app.use("/countries", countryRoutes);
-app.use("/movies", movieRoutes);
-app.use("/actor", actorRoutes);
+app.use("/users",cors(corsOptions), userRoutes);
+app.use("/genres",cors(corsOptions), genreRoutes);
+app.use("/countries",cors(corsOptions), countryRoutes);
+app.use("/movies",cors(corsOptions), movieRoutes);
+app.use("/actor",cors(corsOptions), actorRoutes);
 
 setupSwagger(app); // Sử dụng setup Swagger
 // Kết nối database
