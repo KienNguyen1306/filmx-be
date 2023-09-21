@@ -35,12 +35,9 @@ const setupSwagger = require("./swagger.js"); // Thay đổi đường dẫn t�
 const app = express();
 // kết nối cort
 // app.use(cors());
-app.use(
-  cors({
-    origin: 'phim18hay.online',
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
+app.use(cors({
+  origin: ['https://phim18hay.online']
+}));
 // bodyParser
 app.use(bodyParser.json());
 
