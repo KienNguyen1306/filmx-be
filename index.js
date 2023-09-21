@@ -36,7 +36,7 @@ const app = express();
 // kết nối cort
 // app.use(cors());
 app.use(cors({
-  origin: ['https://phim18hay.online']
+  origin: ['*']
 }));
 // bodyParser
 app.use(bodyParser.json());
