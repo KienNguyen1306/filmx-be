@@ -22,11 +22,11 @@ const Actor = require("./models/Actor");
 const database = require("./dataBase");
 
 // cloudinary
-const cloudinary = require("cloudinary").v2;       
-cloudinary.config({ 
-  cloud_name: 'dhjk2mhjd', 
-  api_key: '579565358183334', 
-  api_secret: 'kQejXOyPp3xOuMqZoMVGxw7Lzs4' 
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: 'dhjk2mhjd',
+  api_key: '579565358183334',
+  api_secret: 'kQejXOyPp3xOuMqZoMVGxw7Lzs4'
 });
 // swagger
 const setupSwagger = require("./swagger.js"); // Thay đổi đường dẫn tới tệp swagger của bạn
@@ -37,7 +37,7 @@ const app = express();
 app.use(cors());
 
 var corsOptions = {
-  origin: 'https://phim18hay.online',
+  origin: ['https://phim18hay.online','http://phim18cong.xyz.phim18hay.online'],
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
@@ -45,11 +45,11 @@ var corsOptions = {
 app.use(bodyParser.json());
 
 // URL
-app.use("/users",cors(corsOptions), userRoutes);
-app.use("/genres",cors(corsOptions), genreRoutes);
-app.use("/countries",cors(corsOptions), countryRoutes);
-app.use("/movies",cors(corsOptions), movieRoutes);
-app.use("/actor",cors(corsOptions), actorRoutes);
+app.use("/users", cors(corsOptions), userRoutes);
+app.use("/genres", cors(corsOptions), genreRoutes);
+app.use("/countries", cors(corsOptions), countryRoutes);
+app.use("/movies", cors(corsOptions), movieRoutes);
+app.use("/actor", cors(corsOptions), actorRoutes);
 
 setupSwagger(app); // Sử dụng setup Swagger
 // Kết nối database
