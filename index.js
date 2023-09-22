@@ -37,7 +37,7 @@ const app = express();
 app.use(cors());
 
 var corsOptions = {
-  origin: ['https://phim18hay.online','http://phim18cong.xyz.phim18hay.online'],
+  origin: ['https://phim18hay.online','http://phim18cong.xyz.phim18hay.online','https://filmx-be.vercel.app'],
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
@@ -72,5 +72,3 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-// Export the Express API
-module.exports = app
