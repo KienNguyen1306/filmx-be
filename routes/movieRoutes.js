@@ -7,6 +7,7 @@ const upload = multer({ dest: "uploads/" });
 
 const router = express.Router();
 router.get("/search", MovieController.getMoviesByName); // GET movies by search query with pagination
+router.get("/top-view", MovieController.topmovieview); // GET all movies with pagination
 
 router.get("/:id", MovieController.getMovieById); // GET movie by ID
 router.get("/", MovieController.getMovies); // GET all movies with pagination
@@ -18,16 +19,21 @@ router.get("/genre/:genreId", MovieController.getMoviesByGenre); // GET movies b
 router.get("/country/:countryId", MovieController.getMoviesByCountry); // GET movies by country with pagination
 router.get("/actor/:actorId", MovieController.getMoviesByActor); // GET movies by actor with pagination
 
+// router.post(
+//   "/",
+//   isAuthenticated,
+//   isAdmin,
+//   upload.fields([
+//     { name: "imageUrl", maxCount: 1 },
+//     { name: "videoUrl", maxCount: 1 },
+//   ]),
+//   MovieController.createMovie
+// ); // CREATE a movie
+
 router.post(
-  "/",
-  isAuthenticated,
-  isAdmin,
-  upload.fields([
-    { name: "imageUrl", maxCount: 1 },
-    { name: "videoUrl", maxCount: 1 },
-  ]),
+  "/api",
   MovieController.createMovie
-); // CREATE a movie
+);
 router.put(
   "/:id",
   isAuthenticated,

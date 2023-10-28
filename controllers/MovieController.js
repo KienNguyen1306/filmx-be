@@ -1,6 +1,8 @@
 // controllers/MovieController.js
 const Movie = require("../models/Movie");
 const Genre = require("../models/Genre");
+const Actor = require("../models/Actor");
+
 const Country = require("../models/Country");
 const { Op } = require("sequelize");
 const until = require("../until");
@@ -39,7 +41,7 @@ exports.getMovieById = async (req, res) => {
   try {
     const movieId = req.params.id;
     const movie = await Movie.findByPk(movieId, {
-      include: [{ model: Genre }, { model: Country }],
+      include: [{ model: Genre }, { model: Country },{model:Actor}],
     });
     if (!movie) {
       return res.status(404).json({ error: "Movie not found" });
@@ -141,17 +143,21 @@ exports.getMoviesByActor = async (req, res) => {
 
 exports.createMovie = async (req, res) => {
   try {
-    const { name, genreId, countryId } = req.body;
+    const { name, genreId, countryId,actorId } = req.body;
     const imageUrl = req.files["imageUrl"][0]; // Tệp ảnh đã tải lên
     const videoUrl = req.files["videoUrl"][0]; // Tệp video đã tải lên
     let imageLink = await until.uploadCloudinry(imageUrl);
     let videoLink = await until.uploadCloudinry(videoUrl);
+     // Lấy thông tin diễn viên dựa trên actorId
+    const actor = await Actor.findByPk(actorId);
+    const movieName = `[ ${actor.name} ] ${name}`;
     const movie = await Movie.create({
-      name,
+      name:movieName,
       imageUrl: imageLink,
       videoUrl: videoLink,
       GenreId: genreId,
       CountryId: countryId,
+      ActorId:actorId
     });
     res.status(201).json(movie);
   } catch (error) {
@@ -162,7 +168,7 @@ exports.createMovie = async (req, res) => {
 exports.updateMovie = async (req, res) => {
   try {
     const movieId = req.params.id;
-    const { name, genreId, countryId } = req.body;
+    const { name, genreId, countryId,actorId } = req.body;
     const imageUrl = req.files["imageUrl"][0]; // Tệp ảnh đã tải lên
     const videoUrl = req.files["videoUrl"][0]; // Tệp video đã tải lên
     let imageLink = await until.uploadCloudinry(imageUrl);
@@ -174,6 +180,7 @@ exports.updateMovie = async (req, res) => {
         videoUrl: videoLink,
         GenreId: genreId,
         CountryId: countryId,
+        ActorId:actorId
       },
       { where: { id: movieId }, returning: true }
     );
@@ -219,7 +226,8 @@ exports.getRelatedMovies = async (req, res) => {
         // Điều kiện tùy ý khác để xác định phim liên quan (ví dụ: cùng thể loại, cùng quốc gia)
       },
       limit: 10, // Giới hạn số lượng phim liên quan
-      include: [{ model: Genre }, { model: Country }],
+      include: [{ model: Genre }, { model: Country },{model:Actor}],
+      order: [["createdAt", "DESC"]],
     });
 
     res.status(200).json({ clickedMovie, relatedMovies });
@@ -249,3 +257,21 @@ exports.increaseView = async (req, res) => {
     res.status(500).json({ error: 'Lỗi trong quá trình xem phim' });
   }
 };
+
+
+
+exports.topmovieview = async (req, res) => {
+  try {
+    // Thực hiện truy vấn để lấy danh sách 15 bộ phim sắp xếp theo số lượt xem cao nhất
+    const movies = await Movie.findAll({
+      order: [['view', 'DESC']], // Sắp xếp theo số lượt xem giảm dần
+      limit: 15, // Giới hạn số lượng kết quả trả về
+    });
+
+    res.json(movies);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Lỗi trong quá trình lấy danh sách phim theo số lượt xem cao nhất' });
+  }
+};
+
